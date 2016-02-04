@@ -2,10 +2,10 @@ package module.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import module.model._04_EmployeeVO;
 import module.model._07_StoreVO;
 import module.util.HibernateUtil;
 
@@ -49,6 +49,12 @@ public class _07_StoreDAO implements _07_Store_InterfaceDAO {
 	@Override
 	public List<_07_StoreVO> getAll() {
 		return getSession().createQuery("from _07_StoreVO").list();
+	}
+	@Override
+	public List<_07_StoreVO> getStoreName(String keyword){
+		Query query=getSession().createQuery("from _07_StoreVO where store_name like ?");
+		query.setParameter(0, "%"+keyword+"%");
+		return query.list();
 	}
 
 	public static void main(String[] args) {
